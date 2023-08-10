@@ -22,6 +22,9 @@ class CarTariff(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
     cost_per_hour = models.FloatField()
 
+    def __str__(self):
+        return self.name
+
 
 class Car(models.Model):
     CAR_STATUSES = (
@@ -38,7 +41,7 @@ class Car(models.Model):
     year_of_production = models.IntegerField()
     odometer = models.FloatField()
     car_cost = models.FloatField()
-    # tariff = models.ForeignKey(CarTariff, on_delete=models.PROTECT, default="DEFAULT")
+    car_tariff = models.ForeignKey(CarTariff, on_delete=models.PROTECT, default="default")
     created_time = models.DateTimeField()
     updated_time = models.DateTimeField()
     car_status = models.CharField(
