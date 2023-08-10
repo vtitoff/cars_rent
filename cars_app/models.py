@@ -15,23 +15,38 @@ class CarModel(models.Model):
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.manufacturer} {self.name}"
+        return f"{self.name}"
+
+
+class CarTariff(models.Model):
+    name = models.CharField(max_length=100, primary_key=True)
+    cost_per_hour = models.FloatField()
 
 
 class Car(models.Model):
+    CAR_STATUSES = (
+        ("STANDBY", "standby"),
+        ("RENTED", "rented"),
+        ("RESERVED", "reserved"),
+        ("IN_THE_SERVICE", "in the service"),
+        ("UNAVAILABLE", "unavailable"),
+    )
     car_id = models.CharField(max_length=200, primary_key=True, default=uuid.uuid4())
     license_number = models.CharField(max_length=50)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     car_model = models.ForeignKey(CarModel, on_delete=models.CASCADE)
     year_of_production = models.IntegerField()
     odometer = models.FloatField()
-    in_rent = models.BooleanField()
     car_cost = models.FloatField()
+    # tariff = models.ForeignKey(CarTariff, on_delete=models.PROTECT, default="DEFAULT")
     created_time = models.DateTimeField()
     updated_time = models.DateTimeField()
+    car_status = models.CharField(
+        max_length=50, choices=CAR_STATUSES, default="STANDBY"
+    )
 
     def __str__(self):
-        return f"{self.car_model} {self.license_number}, in_rent: {self.in_rent}, car_id: {self.car_id}"
+        return f"{self.manufacturer} {self.car_model} {self.license_number}, car_status: {self.car_status}, car_id: {self.car_id}"
 
 
 class User(models.Model):

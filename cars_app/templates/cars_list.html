@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page with Carousels</title>
+    <style>
+        .car_card {
+            border-color: chocolate;
+            border-style: solid;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+        ul{
+            list-style: none;
+        }
+        .car_manufacturer{
+            font-size: 18px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+{% if cars %}
+    <ul>
+    {% for car in cars %}
+        <li class="car_card">
+            <div class="car_manufacturer">{{ car.manufacturer }}</div>
+            <div class="car_model">{{ car.car_model }}</div>
+            <div class="license_number">Гос номер: {{ car.license_number }}</div>
+            <div class="car_id">ID: {{ car.car_id }}</div>
+            <div class="rent_status">В аренде: {% if car.car_status == "RENTED" %} Да {% else %} Нет{% endif %}</div>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No cars are available.</p>
+{% endif %}
+</body>
+</html>
