@@ -28,6 +28,13 @@
             <div class="license_number">Гос номер: {{ car.license_number }}</div>
             <div class="car_id">ID: {{ car.car_id }}</div>
             <div class="rent_status">В аренде: {% if car.car_status == "RENTED" %} Да {% else %} Нет{% endif %}</div>
+            {% if car.car_status != "RENTED" %}
+                <form action="{% url 'cars_app:thanks' %}" method="post">
+                {% csrf_token %}
+                    {{ form }}
+                <input type="submit" class="get_car" value="Взять в аренду" name="get_car">
+                </form>
+            {% endif %}
         </li>
     {% endfor %}
     </ul>

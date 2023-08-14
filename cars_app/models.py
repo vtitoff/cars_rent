@@ -1,6 +1,5 @@
 from django.db import models
 import uuid
-from enum import Enum
 
 
 class Manufacturer(models.Model):
